@@ -12,7 +12,6 @@ class List extends React.Component {
     this.state = {
       page: 1,
       totalPages: 0,
-      // NOTE: Don't set it greater than 50, because maximum perPage for API is 50
       perPage: 20,
       currencies: [],
       loading: false,
@@ -29,15 +28,11 @@ class List extends React.Component {
   fetchCurrencies() {
     const { page, perPage } = this.state;
 
-    // Set loading to true, while we are fetching data from server
     this.setState({ loading: true });
 
-    // Fetch crypto currency data from API with page and perPage parameters
     fetch(`${API_URL}/cryptocurrencies/?page=${page}&perPage=${perPage}`)
       .then(handleResponse)
       .then((data) => {
-        // Set received data in components state
-        // Clear error if any and set loading to false
         const { totalPages, currencies } = data;
 
         this.setState({
@@ -48,7 +43,6 @@ class List extends React.Component {
         });
       })
       .catch((error) => {
-        // Show error message, if request fails and set loading to false
         this.setState({
           error: error.errorMessage,
           loading: false,
@@ -59,11 +53,8 @@ class List extends React.Component {
   handlePaginationClick(direction) {
     let nextPage = this.state.page;
 
-    // Increment nextPage if direction variable is next, otherwise decrement it
     nextPage = direction === 'next' ? nextPage + 1 : nextPage - 1;
 
-    // Call fetchCurrencies function inside setState's callback
-    // Because we have to make sure first page state is updated
     this.setState({ page: nextPage }, () => {
       this.fetchCurrencies();
     });
@@ -72,12 +63,10 @@ class List extends React.Component {
   render() {
     const { currencies, loading, error, page, totalPages } = this.state;
 
-    // Render only loading component, if it's set to true
     if (loading) {
       return <div className="loading-container"><Loading /></div>
     }
 
-    // Render only error message, if error occured while fetching data
     if (error) {
       return <div className="error">{error}</div>
     }
