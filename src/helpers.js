@@ -1,8 +1,6 @@
 import React from 'react';
 
 /**
- * Fetch response helper
- * 
  * @param {object} response 
  */
 export const handleResponse = (response) => {
@@ -17,12 +15,6 @@ export const handleResponse = (response) => {
 }
 
 /**
- * Render change percent
- * 
- * Show green text and up arrow if 24h percentage change has been raised
- * Red text and down arrow if it has fallen
- * Default text color without arrow, if it's zero
- * 
  * @param {number} changePercent
  */
 export const renderChangePercent = (changePercent) => {
