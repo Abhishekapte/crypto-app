@@ -16,32 +16,26 @@ class Detail extends React.Component {
   }
 
   componentWillMount() {
-    // Get id from url params
-    const currencyId = this.props.match.params.id;
+     const currencyId = this.props.match.params.id;
 
-    // Fetch currency
     this.fetchCurrency(currencyId);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.location.pathname !== nextProps.location.pathname) {
-      // Get id from new url params
+      
       const currencyId = nextProps.match.params.id;
       
-      // Fetch currency
       this.fetchCurrency(currencyId);
     }
   }
 
   fetchCurrency(currencyId) {
-    // Set loading to true, while we are fetching data from server
     this.setState({ loading: true });
 
     fetch(`${API_URL}/cryptocurrencies/${currencyId}`)
       .then(handleResponse)
       .then((currency) => {
-        // Set received data in components state
-        // Clear error if any and set loading to false
         this.setState({
           currency,
           error: '',
@@ -49,7 +43,6 @@ class Detail extends React.Component {
         });
       })
       .catch((error) => {
-        // Show error message, if request fails and set loading to false
         this.setState({
           error: error.errorMessage,
           loading: false,
@@ -60,12 +53,10 @@ class Detail extends React.Component {
   render() {
     const { currency, loading, error } = this.state;
 
-    // Render only loading component, if loading state is set to true
     if (loading) {
       return <div className="loading-container"><Loading /></div>
     }
 
-    // Render only error message, if error occured while fetching data
     if (error) {
       return <div className="error">{error}</div>
     }
